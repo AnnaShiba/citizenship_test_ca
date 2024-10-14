@@ -14,7 +14,7 @@ body{
     padding-top: 0.3em;
     padding-left: 0.5em;
     padding-bottom: 1.5em;
-    position: fixed;
+    position: relative;
 }
 main {
     font-family: Aptos, sans-serif;

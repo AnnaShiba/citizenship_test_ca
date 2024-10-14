@@ -502,7 +502,7 @@
     {
         "question": "What are the parties that are not in power called?",
         "options": [
-            "T Parties",
+            "Tea Parties",
             "Opposition Parties",
             "Rival Parties",
             "Opponents Parties"
@@ -1152,10 +1152,10 @@
     {
         "question": "What does the word 'Inuit' mean?",
         "options": [
-            "Eskimo in the Inuktitut language",
-            "Home in English",
-            "The people in the Inuktitut language",
-            "The Arctic land in the Inuktitut language"
+            "'Eskimo' in the Inuktitut language",
+            "'Home' in English",
+            "The 'people' in the Inuktitut language",
+            "The 'Arctic land' in the Inuktitut language"
         ],
         "answerIndex": 2
     },
