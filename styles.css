@@ -1,25 +1,45 @@
-body {
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Aptos, sans-serif;
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+}
+
+#logo{    
+    float: left;
+    width: 10em;
+    margin: 0.3em;
+    padding-top: 0.3em;
+    padding-left: 0.5em;
+    padding-bottom: 1.5em;
+    position: fixed;
+}
+main {
     font-family: Aptos, sans-serif;
     color:rgb(4, 59, 76);
     font-weight: bold;
-    max-width: 600px;
-    height: auto;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 2, 3, 0.959);
+    flex-grow: 1;
+    padding: 2em;
     font-size: 1.2em;
     background-image: url('background.jpg');
-    background-size:cover;
-    background-position: center;
     background-repeat: no-repeat;
+    background-position: calc(90%);
 }
-#logo {
-    width: 150px;
+
+.dropdown{
+    font-family: Aptos, sans-serif;
+    color:rgb(4, 59, 76);
+    align-self: center;
+}
+
+/* #logo {
+
     display: block;
-    margin: 20px auto;
+    
     position: relative;
-}
+} */
 
 h3 {
     margin: 0;
@@ -27,18 +47,21 @@ h3 {
     color: rgb(6, 57, 116);
 }
 
+#results{      
+    background-color: #dde7efc3;
+    padding: 0.5em;
+}
+
 h2{
     color:#0c7987;
     text-align: center;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: rgb(3, 44, 85);
 }
 
 button {
     margin: 10px 0;
     display: block;
     width: 100%;
-    background-color: rgb(164, 211, 250);
+    background-color: #588ece;
     border-radius: 4px;
     padding: 1em;
     color: rgb(2, 44, 92);
@@ -51,8 +74,7 @@ button {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);    
+    border-radius: 4px;
     background-color: #dde7efa4;
 }
 
@@ -64,7 +86,7 @@ button:hover, :focus {
 .option-container {
     display: flex;
     align-items: center;
-    margin: 10px 0;
+    margin: 1em 0;
 }
 
 .option-label {

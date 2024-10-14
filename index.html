@@ -9,16 +9,26 @@
 </head>
 
 <body>
-    <img id="logo" src="logo.png" alt="Logo">
+
     <header>
+        <img id="logo" src="logo.png" alt="Logo">
         <h2>Canadian Citizenship Practice Test</h2>
-        <h3>Please answer 20 questions:</h3>
+        <h2><div class="dropdown">
+            <label for="question-count">Select number of questions:</label>
+            <select id="question-count">
+                <option value="10">10 Questions</option>
+                <option value="20" selected>20 Questions</option>
+                <option value="30">30 Questions</option>
+                <option value="50">50 Questions</option>
+            </select>
+        </div></h2>
     </header>
 
     <main>
 
         <div id="results" style="display:none;"></div>
         <div id="question-container">
+
             <div id="question-number"></div>
             <div id="question"></div>
             <div id="options">
@@ -38,7 +48,7 @@
                     <span class="option-label">D</span>
                     <button id="option-3" class="option-button"></button>
                 </div>
-                <button id="next-button" style="display:none;">Next Question</button>
+                <button id="next-button">Next Question</button>
             </div>
 
         </div>
@@ -48,9 +58,6 @@
 
 
     <script src="script.js"></script>
-    <footer>
- <p>&copy; 2024</p>
-    </footer>
 </body>
 
 </html>

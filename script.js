@@ -2,7 +2,7 @@ let questions = [];
 let currentQuestionIndex = 0;
 let selectedAnswers = [];
 let correctAnswers = 0;
-const TOTAL_QUESTIONS = 5; // Number of questions to show
+let totalQuestions = 5; // Number of questions to show
 
 // Load questions from JSON file
 fetch('questions.json')
@@ -13,14 +13,14 @@ fetch('questions.json')
     });
 
 function showQuestion() {
-    if (currentQuestionIndex < TOTAL_QUESTIONS) {
+    if (currentQuestionIndex < totalQuestions) {
         const currentQuestion = questions[currentQuestionIndex];
         
         // Display the question
         document.getElementById("question").innerText = currentQuestion.question;
         
         // Display the current question number
-        document.getElementById("question-number").innerText = `Question ${currentQuestionIndex + 1} of ${TOTAL_QUESTIONS}`;
+        document.getElementById("question-number").innerText = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
         
         // Display the options
         currentQuestion.options.forEach((option, index) => {
@@ -30,7 +30,7 @@ function showQuestion() {
         });
         
         // Hide the "Next" button initially
-        document.getElementById("next-button").style.display = "none";
+        // document.getElementById("next-button").style.display = "none";
     } else {
         showResults();
     }
@@ -65,7 +65,7 @@ function showResults() {
     resultsContainer.style.display = "block";
 
     let resultHtml = `<h2>Results</h2>
-                      <p>You got ${correctAnswers} out of ${TOTAL_QUESTIONS} questions correct.</p>`;
+                      <p>You got ${correctAnswers} out of ${totalQuestions} questions correct.</p>`;
     resultHtml += `<h3>Review your answers:</h3>`;
     selectedAnswers.forEach((answer, index) => {
         resultHtml += `<div>
@@ -90,4 +90,13 @@ function shuffle(array) {
 // Initialize the quiz
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("next-button").addEventListener('click', nextQuestion);
+    
+    const dropdown = document.getElementById("question-count");
+    dropdown.addEventListener("change", setTotalQuestions);
 });
+
+function setTotalQuestions() {
+    const dropdown = document.getElementById("question-count");
+    totalQuestions = parseInt(dropdown.value);
+    showQuestion();
+}
