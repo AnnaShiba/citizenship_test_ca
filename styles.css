@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    color:rgb(4, 59, 76);
+    font-weight: bold;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #c7eafc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 2, 3, 0.959);
+    font-size: 1.2em;
+}
+h3{
+    color: rgb(23, 129, 158);
+}
+
+button {
+    margin: 10px;
+    display:flex;
+    background-color: rgb(164, 211, 250);
+    border-radius: 4px;
+    padding: 1em;
+    color: rgb(2, 44, 92);
+    font-weight: bold;
+    font-size: 1em;
+    text-align: left;
+}
+button:hover, :focus {
+    background-color: #79b1e0;
+    cursor: pointer;
+}
+button:focus {
+    background-color: #c1ceda;
+    cursor: pointer;
+}
