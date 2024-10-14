@@ -8,7 +8,7 @@ const TOTAL_QUESTIONS = 20; // Number of questions to show
 fetch('questions.json')
     .then(response => response.json())
     .then(data => {
-        questions = shuffle(data).slice(0, TOTAL_QUESTIONS); // Shuffle and select the first 20 questions
+        questions = shuffle(data); // Shuffle
         showQuestion();
     });
 
