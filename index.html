@@ -1,44 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canadian Citizenship Test</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <h2>Canadian Citizenship Practice Test</h2>
-    <h3>Please answer 20 questions:</h3>
 
-    <div id="results" style="display:none;"></div>
-    <div id="question-container">
-        <div id="question-number"></div> <!-- This displays the current question number -->
-        <div id="question"></div> <!-- This displays the question text -->
-        <div id="options">
-            <div class="option-container">
-                <span class="option-label">A</span>
-                <button id="option-0" class="option-button"></button>
+<body>
+    <img id="logo" src="logo.png" alt="Logo">
+    <header>
+        <h2>Canadian Citizenship Practice Test</h2>
+        <h3>Please answer 20 questions:</h3>
+    </header>
+
+    <main>
+
+        <div id="results" style="display:none;"></div>
+        <div id="question-container">
+            <div id="question-number"></div>
+            <div id="question"></div>
+            <div id="options">
+                <div class="option-container">
+                    <span class="option-label">A</span>
+                    <button id="option-0" class="option-button"></button>
+                </div>
+                <div class="option-container">
+                    <span class="option-label">B</span>
+                    <button id="option-1" class="option-button"></button>
+                </div>
+                <div class="option-container">
+                    <span class="option-label">C</span>
+                    <button id="option-2" class="option-button"></button>
+                </div>
+                <div class="option-container">
+                    <span class="option-label">D</span>
+                    <button id="option-3" class="option-button"></button>
+                </div>
+                <button id="next-button" style="display:none;">Next Question</button>
             </div>
-            <div class="option-container">
-                <span class="option-label">B</span>
-                <button id="option-1" class="option-button"></button>
-            </div>
-            <div class="option-container">
-                <span class="option-label">C</span>
-                <button id="option-2" class="option-button"></button>
-            </div>
-            <div class="option-container">
-                <span class="option-label">D</span>
-                <button id="option-3" class="option-button"></button>
-            </div>
-            <button id="next-button" style="display:none;">Next Question</button>
+
         </div>
-        
-        </div> <!-- This is where the answer options go -->
-        
-    </div>
-      
+
+        </div>
+    </main>
+
 
     <script src="script.js"></script>
+    <footer>
+ <p>&copy; 2024</p>
+    </footer>
 </body>
+
 </html>

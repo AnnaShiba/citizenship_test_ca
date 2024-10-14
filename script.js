@@ -2,7 +2,7 @@ let questions = [];
 let currentQuestionIndex = 0;
 let selectedAnswers = [];
 let correctAnswers = 0;
-const TOTAL_QUESTIONS = 20; // Number of questions to show
+const TOTAL_QUESTIONS = 5; // Number of questions to show
 
 // Load questions from JSON file
 fetch('questions.json')
@@ -69,10 +69,10 @@ function showResults() {
     resultHtml += `<h3>Review your answers:</h3>`;
     selectedAnswers.forEach((answer, index) => {
         resultHtml += `<div>
-            <strong>Question ${index + 1}:</strong> ${answer.question}<br>
-            <strong>Your answer:</strong> ${answer.selectedAnswer}<br>
-            <strong>Correct answer:</strong> ${answer.correctAnswer}<br>
-            ${answer.isCorrect ? '<span style="color: green;">Correct</span>' : '<span style="color: red;">Incorrect</span>'}
+            <span class="result-question">Question ${index + 1}: ${answer.question}</span><br>
+            <span class="result-answer">Your answer is: ${answer.selectedAnswer} </span><br>
+            <span class="result-answer">Correct answer: ${answer.correctAnswer}</span><br>
+            ${answer.isCorrect ? '<span class="result-correct">Correct</span>' : '<span class="result-incorrect">Incorrect</span>'}
             <br><br>
         </div>`;
     });

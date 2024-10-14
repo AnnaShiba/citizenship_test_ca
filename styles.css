@@ -1,20 +1,37 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: Aptos, sans-serif;
     color:rgb(4, 59, 76);
     font-weight: bold;
     max-width: 600px;
+    height: auto;
     margin: 50px auto;
     padding: 20px;
-    background-color: #c7eafc;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 2, 3, 0.959);
     font-size: 1.2em;
+    background-image: url('background.jpg');
+    background-size:cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+#logo {
+    width: 150px;
+    display: block;
+    margin: 20px auto;
+    position: relative;
 }
 
 h3 {
     margin: 0;
     text-align: center;
-    color: rgb(2, 44, 92);
+    color: rgb(6, 57, 116);
+}
+
+h2{
+    color:#0c7987;
+    text-align: center;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(3, 44, 85);
 }
 
 button {
@@ -35,15 +52,8 @@ button {
     margin: 20px auto;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.box {
-    display: grid;
-    grid-template-columns: 30px auto;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);    
+    background-color: #dde7efa4;
 }
 
 button:hover, :focus {
@@ -76,8 +86,28 @@ button:hover, :focus {
     text-align: left;
 }
 
-.option-button:hover, :focus {
+.option-button:hover{
     background-color: #82c2f1;
+}
+
+.option-button:focus {
+    background-color: #70b6e8;
+}
+
+.result-question {
+    color: #0363c9;
+}
+
+.result-answer{
+    color: #02445c;
+}
+
+.result-correct{
+    color: green;
+}
+
+.result-incorrect{
+    color: red;
 }
 
 #next-button {
@@ -97,4 +127,8 @@ button:hover, :focus {
 
 #next-button:hover {
     background-color: #138496;
+}
+
+footer{
+    color: aliceblue;
 }
