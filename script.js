@@ -23,14 +23,10 @@ function showQuestion() {
         document.getElementById("question-number").innerText = `Question ${currentQuestionIndex + 1} of ${TOTAL_QUESTIONS}`;
         
         // Display the options
-        const optionsContainer = document.getElementById("options");
-        optionsContainer.innerHTML = '';
         currentQuestion.options.forEach((option, index) => {
-            const button = document.createElement('button');
+            const button = document.getElementById("option-" + index);
             button.innerText = option;
-            button.classList.add('option-button');
             button.onclick = () => selectAnswer(index);
-            optionsContainer.appendChild(button);
         });
         
         // Hide the "Next" button initially
