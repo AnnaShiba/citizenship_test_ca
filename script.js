@@ -2,7 +2,8 @@ let questions = [];
 let currentQuestionIndex = 0;
 let selectedAnswers = [];
 let correctAnswers = 0;
-let totalQuestions = 5; // Number of questions to show
+let totalQuestions = 20; // Number of questions to show
+let selectedAnswer = 0;
 
 // Load questions from JSON file
 fetch('questions.json')
@@ -37,23 +38,25 @@ function showQuestion() {
 }
 
 function selectAnswer(selectedIndex) {
-    const question = questions[currentQuestionIndex];
-    selectedAnswers.push({
-        question: question.question,
-        selectedAnswer: question.options[selectedIndex],
-        correctAnswer: question.options[question.answerIndex],
-        isCorrect: selectedIndex === question.answerIndex
-    });
-
-    if (selectedIndex === question.answerIndex) {
-        correctAnswers++;
-    }
+    selectedAnswer = selectedIndex;
 
     // Show the "Next" button after selecting an answer
     document.getElementById("next-button").style.display = "block";
 }
 
 function nextQuestion() {
+    const question = questions[currentQuestionIndex];
+    selectedAnswers.push({
+        question: question.question,
+        selectedAnswer: question.options[selectedAnswer],
+        correctAnswer: question.options[question.answerIndex],
+        isCorrect: selectedAnswer === question.answerIndex
+    });
+
+    if (selectedAnswer === question.answerIndex) {
+        correctAnswers++;
+    }
+
     currentQuestionIndex++;
     showQuestion();
 }
@@ -68,13 +71,15 @@ function showResults() {
                       <p>You got ${correctAnswers} out of ${totalQuestions} questions correct.</p>`;
     resultHtml += `<h3>Review your answers:</h3>`;
     selectedAnswers.forEach((answer, index) => {
-        resultHtml += `<div>
-            <span class="result-question">Question ${index + 1}: ${answer.question}</span><br>
-            <span class="result-answer">Your answer is: ${answer.selectedAnswer} </span><br>
-            <span class="result-answer">Correct answer: ${answer.correctAnswer}</span><br>
-            ${answer.isCorrect ? '<span class="result-correct">Correct</span>' : '<span class="result-incorrect">Incorrect</span>'}
-            <br><br>
-        </div>`;
+        if (!answer.isCorrect) {
+            resultHtml += `<div>
+                <span class="result-question">Question ${index + 1}: ${answer.question}</span><br>
+                <span class="result-answer">Your answer is: ${answer.selectedAnswer} </span><br>
+                <span class="result-answer">Correct answer: ${answer.correctAnswer}</span><br>
+                ${answer.isCorrect ? '<span class="result-correct">Correct</span>' : '<span class="result-incorrect">Incorrect</span>'}
+                <br><br>
+            </div>`;
+        }
     });
     resultsContainer.innerHTML = resultHtml;
 }
@@ -87,9 +92,16 @@ function shuffle(array) {
     return array;
 }
 
+function startQuiz() {
+    document.getElementById("start-container").style.display = "none";
+    document.getElementById("question-container").style.display = "block";
+}
+
 // Initialize the quiz
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("next-button").addEventListener('click', nextQuestion);
+
+    document.getElementById("start").addEventListener('click', startQuiz);
     
     const dropdown = document.getElementById("question-count");
     dropdown.addEventListener("change", setTotalQuestions);

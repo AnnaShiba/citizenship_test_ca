@@ -13,21 +13,24 @@
     <header>
         <img id="logo" src="logo.png" alt="Logo">
         <h2>Canadian Citizenship Practice Test</h2>
-        <h2><div class="dropdown">
-            <label for="question-count">Select number of questions:</label>
-            <select id="question-count">
-                <option value="10">10 Questions</option>
-                <option value="20" selected>20 Questions</option>
-                <option value="30">30 Questions</option>
-                <option value="50">50 Questions</option>
-            </select>
-        </div></h2>
     </header>
 
     <main>
 
         <div id="results" style="display:none;"></div>
-        <div id="question-container">
+        <div id="start-container" class="container">
+            <h2><div class="dropdown">
+                <label for="question-count">Select number of questions:</label>
+                <select id="question-count">
+                    <option value="10">10 Questions</option>
+                    <option value="20" selected>20 Questions</option>
+                    <option value="30">30 Questions</option>
+                    <option value="50">50 Questions</option>
+                </select>
+            </div></h2>
+            <button id="start">Start Quiz</button>
+        </div>
+        <div id="question-container" class="container" style="display:none;">
 
             <div id="question-number"></div>
             <div id="question"></div>
