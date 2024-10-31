@@ -144,6 +144,16 @@ button:hover, :focus {
     background-color: #138496;
 }
 
-footer{
-    color: aliceblue;
+#question-count{
+    size: 3em;
+}
+
+#start {
+    text-align: center;
+    background-color: #17a2b8;
+    border: none;
+}
+
+#start:hover {
+    background-color: #138496;
 }

@@ -615,7 +615,7 @@
 			"Dr. Wilder Penfield",
 			"Matthew Evans and Henry Woodward",
 			"Sir Frederick Banting and Charles Best",
-			"Dr. John A. Hops"
+			"Dr. John A. Hopps"
 		],
 		"answerIndex": 2
 	},
@@ -635,7 +635,7 @@
 			"Reginald Fessenden",
 			"Rick Hansen",
 			"Terry Fox",
-			"Ghard Herberg"
+			"Gerhard Herzberg"
 		],
 		"answerIndex": 1
 	},
@@ -645,7 +645,7 @@
 			"Louis Riel",
 			"Sir Louis-Hippolyte La Fontaine",
 			"Sir John A. Macdonald",
-			"Sir William Riel"
+			"Thomas Scott"
 		],
 		"answerIndex": 0
 	},
@@ -770,7 +770,7 @@
 		"answerIndex": 1
 	},
 	{
-		"question": "What is the meaning of the Canadian coat of arms and motto 'Amari usque ad Mare'?",
+		"question": "What is the meaning of the Canadian coat of arms and motto 'A Mari usque ad Mare'?",
 		"options": [
 			"From air to land",
 			"From sea to land",
@@ -913,7 +913,7 @@
 		"question": "Who is the greatest Canadian hockey player?",
 		"options": [
 			"Wayne Gretzky",
-			"Mark Tukur",
+			"Mark Tewksbury",
 			"Donovan Bailey",
 			"Terry Fox"
 		],
@@ -1154,7 +1154,7 @@
 		"options": [
 			"'Eskimo' in the Inuktitut language",
 			"'Home' in English",
-			"The 'people' in the Inuktitut language",
+			"The 'People' in the Inuktitut language",
 			"The 'Arctic land' in the Inuktitut language"
 		],
 		"answerIndex": 2
@@ -1260,7 +1260,7 @@
 		"answerIndex": 3
 	},
 	{
-		"question": "How many Great Lakes are located between Ontario and the United States?",
+		"question": "How many Great Lakes exist?",
 		"options": [
 			"4",
 			"5",
