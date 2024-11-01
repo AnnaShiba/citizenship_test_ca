@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canadian Citizenship Test</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- All images created by DALL-E 3 -->
+    <!--Background image made by me @AnnaShiba-->
+    <script src="script.js"></script>
+    <!--Author of Sparticles library: simeydotme (simey.me@gmail.com), license: MPL-2.0-->
+    <script src="sparticles.js"></script>
 </head>
 
 <body>
-
     <header>
         <img id="logo" src="logo.png" alt="Logo">
         <h2>Canadian Citizenship Practice Test</h2>
@@ -17,11 +21,12 @@
 
     <main>
 
-        <div id="results" style="display:none;"></div>
+        <div id="results" class="falling" style="display:none;"></div>
         <div id="start-container" class="container">
             <h2><div class="dropdown">
                 <label for="question-count">Select number of questions:</label>
                 <select id="question-count">
+                    <option value="5">5 Questions</option>
                     <option value="10">10 Questions</option>
                     <option value="20" selected>20 Questions</option>
                     <option value="30">30 Questions</option>
@@ -51,7 +56,7 @@
                     <span class="option-label">D</span>
                     <button id="option-3" class="option-button"></button>
                 </div>
-                <button id="next-button">Next Question</button>
+                <button id="next-button">Submit</button>
             </div>
 
         </div>
@@ -61,6 +66,15 @@
 
 
     <script src="script.js"></script>
+    <footer>
+        <p>
+            <a href="https://www.canada.ca/en/immigration-refugees-citizenship/corporate/publications-manuals/discover-canada.html" target="_blank">
+                Government of Canada Study Guide</a>
+        </p>
+        <p>
+            <a href="https://github.com/AnnaShiba/citizenship_test_ca" target="_blank">GitHub</a>
+        </p>
+    </footer>
 </body>
 
 </html>
