@@ -125,7 +125,7 @@ button:hover, :focus {
     color: red;
 }
 
-#next-button {
+#next-button, #again-button {
     margin-top: 20px;
     display: block;
     width: 100%;
@@ -141,6 +141,10 @@ button:hover, :focus {
 }
 
 #next-button:hover {
+    background-color: #138496;
+}
+
+#again-button:hover {
     background-color: #138496;
 }
 

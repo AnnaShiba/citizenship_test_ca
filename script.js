@@ -1,271 +1,281 @@
-let questions = [];
+
+
+let allQuestions = [];       
+let selectedQuestions = [];  
 let currentQuestionIndex = 0;
-let selectedAnswers = [];
-let correctAnswers = 0;
-let totalQuestions = 20; // Number of questions to show
-let selectedAnswer = 0;
+let score = 0;
+let userAnswers = [];       
+let selectedAnswer = null;   
 
-// Load questions from JSON file
-fetch('questions.json')
-    .then(response => response.json())
-    .then(data => {
-        questions = shuffle(data); // Shuffle
-        showQuestion();
-    });
-
-function showQuestion() {
-    if (currentQuestionIndex < totalQuestions) {
-        const currentQuestion = questions[currentQuestionIndex];
-        
-        // Display the question
-        document.getElementById("question").innerText = currentQuestion.question;
-        
-        // Display the current question number
-        document.getElementById("question-number").innerText = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
-        
-        // Display the options
-        currentQuestion.options.forEach((option, index) => {
-            const button = document.getElementById("option-" + index);
-            button.innerText = option;
-            button.onclick = () => selectAnswer(index);
-        });
-        
-        // Hide the "Next" button initially
-        // document.getElementById("next-button").style.display = "none";
-    } else {
-        showResults();
-    }
-}
-
-function selectAnswer(selectedIndex) {
-    selectedAnswer = selectedIndex;
-
-    // Show the "Next" button after selecting an answer
-    document.getElementById("next-button").style.display = "block";
-}
-
-function nextQuestion() {
-    const question = questions[currentQuestionIndex];
-    selectedAnswers.push({
-        question: question.question,
-        selectedAnswer: question.options[selectedAnswer],
-        correctAnswer: question.options[question.answerIndex],
-        isCorrect: selectedAnswer === question.answerIndex
-    });
-
-    if (selectedAnswer === question.answerIndex) {
-        correctAnswers++;
-    }
-
-    currentQuestionIndex++;
-    showQuestion();
-}
-
-// Function to display results at the end of the quiz
-function showResults() {
-    document.getElementById("question-container").style.display = "none";
-    const resultsContainer = document.getElementById("results");
-    resultsContainer.style.display = "block";
-
-    let resultHtml = `<h2>Results</h2>
-                      <p>You got ${correctAnswers} out of ${totalQuestions} questions correct.</p>`;
-    resultHtml += `<h3>Review your answers:</h3>`;
-    selectedAnswers.forEach((answer, index) => {
-        if (!answer.isCorrect) {
-            resultHtml += `<div>
-                <span class="result-question">Question ${index + 1}: ${answer.question}</span><br>
-                <span class="result-answer">Your answer is: ${answer.selectedAnswer} </span><br>
-                <span class="result-answer">Correct answer: ${answer.correctAnswer}</span><br>
-                ${answer.isCorrect ? '<span class="result-correct">Correct</span>' : '<span class="result-incorrect">Incorrect</span>'}
-                <br><br>
-            </div>`;
-        }
-    });
-
-    resultsContainer.innerHTML = resultHtml;
-
-    const encouragementImage = document.createElement("img");    
-    if (correctAnswers > totalQuestions * 0.75) {
-      encouragementImage.src = "bunny.png";
-      encouragementImage.alt = "Encouraging Bunny";
-      initSparticles();
-      showGreets()
-    } else if (correctAnswers >= totalQuestions * 0.5) {
-      encouragementImage.src = "goose.png";
-      encouragementImage.alt = "Encouraging Goose";
-      showApprove()
-    } else {
-      encouragementImage.src = "beaver.png";
-      encouragementImage.alt = "Encouraging Beaver";
-      showGrief()
-    }
-    resultsContainer.appendChild(encouragementImage);
-}
-
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-function startQuiz() {
-    document.getElementById("start-container").style.display = "none";
-    document.getElementById("question-container").style.display = "block";
-}
-
-// Initialize the quiz
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById("next-button").addEventListener('click', nextQuestion);
-
-    document.getElementById("start").addEventListener('click', startQuiz);
-    
-    const dropdown = document.getElementById("question-count");
-    dropdown.addEventListener("change", setTotalQuestions);
-
-});
-
-function setTotalQuestions() {
-    const dropdown = document.getElementById("question-count");
-    totalQuestions = parseInt(dropdown.value);
-    showQuestion();
-}
-
-// Particles configuration
-const colors = [
-    "rgba(255,0,0,1)",
-    "rgba(222,165,0,1)",
-    "rgba(0,150,255,1)",
-    "rgba(0,150,125,1)"
+// DOM Elements
+const startContainer = document.getElementById("start-container");
+const startButton = document.getElementById("start");
+const questionContainer = document.getElementById("question-container");
+const questionNumberElem = document.getElementById("question-number");
+const questionElem = document.getElementById("question");
+const optionButtons = [
+  document.getElementById("option-0"),
+  document.getElementById("option-1"),
+  document.getElementById("option-2"),
+  document.getElementById("option-3")
 ];
+const nextButton = document.getElementById("next-button");
+const againButton = document.getElementById("again-button");
+const resultsContainer = document.getElementById("results");
+const questionCountSelect = document.getElementById("question-count");
 
-const options = {
-    alphaSpeed: 10,
-    alphaVariance: 1,
-    color: colors,
-    composition: "source-over",
-    count: 350,
-    direction: 161,
-    float: 0.75,
-    glow: 3,
-
-    // Movement variants for Particles
-    maxAlpha: 3,
-    maxSize: 22,
-    minAlpha: -0.2,
-    minSize: 8,
-    parallax: 1.75,
-    rotation: 0.5,
-    shape: "diamond",
-    speed: 32,
-    style: "fill",
-    twinkle: false,
-    xVariance: 5,
-    yVariance: 0,
-};
-
-// Function to initialize sparticles (Particles)
-function initSparticles() {
-    const $main = document.querySelector('.falling');
-    window.mySparticles = new sparticles.Sparticles($main, options);
-
-    // Stop the particles after 3 seconds
-    setTimeout(() => {
-        window.mySparticles.stop(); // Stop the particle effect
-        $main.style.visibility = 'hidden'; // Make the particles invisible
-    }, 3000);
+// Utility: Fisher-Yates shuffle
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
 }
 
-function showGreets() {
-    const greetsContainer = document.createElement("div");
-    greetsContainer.id = "greets-container";
-    greetsContainer.innerHTML = `<div class="greets"><h2>Congratulations, you passed!</h2></div>`;
-    document.body.appendChild(greetsContainer);
-
-    const style = document.createElement("style");
-    style.innerHTML = `
-      .greets {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #ff0;
-        font-size: 3em;
-        animation: fadeInOut 3s ease-in-out;
-      }
-      @keyframes fadeInOut {
-        0% { opacity: 0; }
-        25% { opacity: 1; }
-        75% { opacity: 1; }
-        100% { opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
-    // Set the element to display: none after animation ends
-    greetsContainer.addEventListener('animationend', () => {
-        greetsContainer.style.display = 'none';
+// Start the quiz: fetch questions, pick random ones and show the first question.
+function startQuiz() {
+  fetch("questions.json")
+    .then((response) => response.json())
+    .then((data) => {
+      allQuestions = data;
+      // Get number of questions from the dropdown.
+      const numQuestions = parseInt(questionCountSelect.value, 10);
+      // Shuffle the questions array and take the first numQuestions.
+      shuffleArray(allQuestions);
+      selectedQuestions = allQuestions.slice(0, numQuestions);
+      // Reset state variables.
+      currentQuestionIndex = 0;
+      score = 0;
+      userAnswers = [];
+      selectedAnswer = null;
+      // Hide start container and show question container.
+      startContainer.style.display = "none";
+      resultsContainer.style.display = "none";
+      questionContainer.style.display = "block";
+      // Display the first question.
+      showQuestion();
+    })
+    .catch((error) => {
+      console.error("Error loading questions:", error);
     });
 }
 
-function showApprove() {
-    const approveContainer = document.createElement("div");
-    approveContainer.id = "approve-container";
-    approveContainer.innerHTML = `<div class="approve"><h2>You are doing good! Study more!</h2></div>`;
-    document.body.appendChild(approveContainer);
-
-    const style = document.createElement("style");
-    style.innerHTML = `
-      .approve {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #ff0;
-        font-size: 3em;
-        animation: fadeInOut 3s ease-in-out;
-      }
-      @keyframes fadeInOut {
-        0% { opacity: 0; }
-        25% { opacity: 1; }
-        75% { opacity: 1; }
-        100% { opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
-    // Set the element to display: none after animation ends
-    approveContainer.addEventListener('animationend', () => {
-        approveContainer.style.display = 'none';
-    });
+// Display current question and options.
+function showQuestion() {
+  // Clear any previous selected answer styling.
+  selectedAnswer = null;
+  optionButtons.forEach((button) => {
+    button.classList.remove("selected");
+  });
+  
+  // Get the current question.
+  const currentQuestion = selectedQuestions[currentQuestionIndex];
+  // Update question number display.
+  questionNumberElem.innerText = `Question ${currentQuestionIndex + 1} of ${selectedQuestions.length}`;
+  // Update question text.
+  questionElem.innerText = currentQuestion.question;
+  
+  // Display options (the order is kept as in the JSON file).
+  currentQuestion.options.forEach((option, index) => {
+    optionButtons[index].innerText = option;
+  });
 }
 
-function showGrief() {
-    const griefContainer = document.createElement("div");
-    griefContainer.id = "grief-container";
-    griefContainer.innerHTML = `<div class="grief"><h2>Ohh! Please, try again!</h2></div>`;
-    document.body.appendChild(griefContainer);
-
-    const style = document.createElement("style");
-    style.innerHTML = `
-      .grief {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #ff0;
-        font-size: 3em;
-        animation: fadeInOut 3s ease-in-out;
-      }
-      @keyframes fadeInOut {
-        0% { opacity: 0; }
-        25% { opacity: 1; }
-        75% { opacity: 1; }
-        100% { opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
-    // Set the element to display: none after animation ends
-    griefContainer.addEventListener('animationend', () => {
-        griefContainer.style.display = 'none';
-    });
+// Handle answer option selection.
+function selectOption(index) {
+  selectedAnswer = index;
+  // Highlight the selected button and remove highlight from others.
+  optionButtons.forEach((button, btnIndex) => {
+    if (btnIndex === index) {
+      button.classList.add("selected");
+    } else {
+      button.classList.remove("selected");
+    }
+  });
 }
+
+// When user clicks Submit/Next.
+function handleSubmit() {
+  // Make sure an option is selected.
+  if (selectedAnswer === null) {
+    alert("Please select an answer before submitting.");
+    return;
+  }
+  const currentQuestion = selectedQuestions[currentQuestionIndex];
+  const isCorrect = (selectedAnswer === currentQuestion.answerIndex);
+  if (isCorrect) {
+    score++;
+  }
+  // Store answer record for review later.
+  userAnswers.push({
+    question: currentQuestion.question,
+    options: currentQuestion.options,
+    correctAnswer: currentQuestion.options[currentQuestion.answerIndex],
+    userAnswer: currentQuestion.options[selectedAnswer],
+    isCorrect: isCorrect
+  });
+  
+  // Move to next question or finish quiz.
+  currentQuestionIndex++;
+  if (currentQuestionIndex < selectedQuestions.length) {
+    showQuestion();
+  } else {
+    showResults();
+  }
+}
+
+// Display the final results.
+function showResults() {
+  // Hide the question container.
+  questionContainer.style.display = "none";
+  // Clear previous results.
+  resultsContainer.innerHTML = "";
+  resultsContainer.style.display = "block";
+  
+  // Calculate percentage score.
+  const total = selectedQuestions.length;
+  const percentage = Math.round((score / total) * 100);
+  
+  // Create a summary heading.
+  const summaryHeading = document.createElement("h2");
+  summaryHeading.innerText = `You scored ${score} out of ${total} (${percentage}%)`;
+  resultsContainer.appendChild(summaryHeading);
+  
+  // Display detailed feedback for wrong answers.
+  userAnswers.forEach((answerRecord, index) => {
+    if (!answerRecord.isCorrect) {
+      const questionDiv = document.createElement("div");
+      questionDiv.classList.add("result-question");
+      questionDiv.innerText = `Q: ${answerRecord.question}`;
+      
+      const answerDiv = document.createElement("div");
+      answerDiv.classList.add("result-answer");
+      answerDiv.innerHTML = `Your answer: <span class="result-incorrect">${answerRecord.userAnswer}</span><br>
+                             Correct answer: <span class="result-correct">${answerRecord.correctAnswer}</span>`;
+      
+      resultsContainer.appendChild(questionDiv);
+      resultsContainer.appendChild(answerDiv);
+      resultsContainer.appendChild(document.createElement("hr"));
+    }
+  });
+  
+  // Display performance image and message.
+  const performanceDiv = document.createElement("div");
+  performanceDiv.style.textAlign = "center";
+  performanceDiv.style.marginTop = "20px";
+  const performanceText = document.createElement("h2");
+  const performanceImg = document.createElement("img");
+  performanceImg.style.maxWidth = "200px";
+  
+  if (percentage >= 75) {
+    performanceText.innerText = "Congratulations, you passed!";
+    performanceImg.src = "bunny.png";
+    // Trigger fireworks if 75% or more.
+    launchFireworks();
+  } else if (percentage >= 50) {
+    performanceText.innerText = "Great job! Need little more practice!";
+    performanceImg.src = "goose.png";
+  } else {
+    performanceText.innerText = "Oh! Please try again!";
+    performanceImg.src = "beaver.png";
+  }
+  
+  performanceDiv.appendChild(performanceText);
+  performanceDiv.appendChild(performanceImg);
+  resultsContainer.appendChild(performanceDiv);
+
+  // Show the Try Again button.
+  document.getElementById("try-again-container").style.display = "block";
+
+}
+
+
+// Launch a simple fireworks animation (colored particles flying from center to edges in 0.5 seconds).
+function launchFireworks() {
+  // Create canvas covering the viewport.
+  const canvas = document.createElement("canvas");
+  canvas.style.position = "fixed";
+  canvas.style.top = 0;
+  canvas.style.left = 0;
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
+  canvas.style.pointerEvents = "none";
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext("2d");
+  
+  // Set canvas dimensions.
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const particles = [];
+  const particleCount = 100;
+  const duration = 500; // in ms
+  const startTime = performance.now();
+  
+  // Create particles with random velocities and colors.
+  for (let i = 0; i < particleCount; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = Math.random() * 5 + 2;
+    particles.push({
+      x: centerX,
+      y: centerY,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      radius: Math.random() * 3 + 2,
+      color: `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`
+    });
+  }
+  
+  // Animation loop.
+  function animate(now) {
+    const elapsed = now - startTime;
+    const progress = elapsed / duration;
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    particles.forEach(p => {
+      // Update position.
+      p.x += p.vx;
+      p.y += p.vy;
+      // Fade out over time.
+      const alpha = 1 - progress;
+      ctx.fillStyle = p.color.replace(")", `, ${alpha})`).replace("hsl", "hsla");
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    
+    if (elapsed < duration) {
+      requestAnimationFrame(animate);
+    } else {
+      // Remove canvas after animation completes.
+      document.body.removeChild(canvas);
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+// Reset the quiz (Try Again button).
+function resetQuiz() {
+  // Show start container and hide other containers.
+  startContainer.style.display = "block";
+  questionContainer.style.display = "none";
+  resultsContainer.style.display = "none";
+  document.getElementById("try-again-container").style.display = "none";
+}
+
+// Event Listeners
+document.addEventListener("DOMContentLoaded", () => {
+  // Set up option button click events.
+  optionButtons.forEach((button, index) => {
+    button.addEventListener("click", () => selectOption(index));
+  });
+  // Next/Submit button.
+  nextButton.addEventListener("click", handleSubmit);
+  // Start button.
+  startButton.addEventListener("click", startQuiz);
+  // Try Again button.
+  againButton.addEventListener("click", resetQuiz);
+});
