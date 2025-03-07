@@ -211,7 +211,7 @@ function launchFireworks() {
   const centerY = canvas.height / 2;
   const particles = [];
   const particleCount = 100;
-  const duration = 500; // in ms
+  const duration = 1000; // in ms
   const startTime = performance.now();
   
   // Create particles with random velocities and colors.
