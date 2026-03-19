@@ -2,7 +2,7 @@
 <table>
 <tr>
 <td>
-<img src="citizenship_test_ca/logo.png" alt="Canadian_flag" width="400"/>
+<img src="logo.png" alt="Canadian_flag" width="400"/>
 </td>
 <td>
 Prepare for you citizenship test
