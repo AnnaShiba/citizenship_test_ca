@@ -1,4 +1,14 @@
 # **Canadian Citizenship Practice Test**
+<table>
+<tr>
+<td>
+<img src="Screenshot/logo.png" alt="Canadian_flag" width="400"/>
+</td>
+<td>
+Prepare for you citizenship test
+</td>
+</tr>
+</table>
 ---
 [🟢 Check your knowlege here](https://citizenship.my/)
 ---
